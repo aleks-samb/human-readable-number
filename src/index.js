@@ -1,55 +1,56 @@
 module.exports = function toReadable (number) {
- n1 = ['zero', 'one', 'two', 'tree', 'four', 'five', 'six', 'seven', 'eight', 'nine',
-        'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen']
+ const num = {
+        0: 'zero',
+        1: 'one',
+        2: 'two',
+        3: 'three',
+        4: 'four',
+        5: 'five',
+        6: 'six',
+        7: 'seven',
+        8: 'eight',
+        9: 'nine',
+        10: 'ten',
+        11: 'eleven',
+        12: 'twelve',
+        13: 'thirteen',
+        14: 'fourteen',
+        15: 'fifteen',
+        16: 'sixteen',
+        17: 'seventeen',
+        18: 'eighteen',
+        19: 'nineteen',
+        20: 'twenty',
+        30: 'thirty',
+        40: 'forty',
+        50: 'fifty',
+        60: 'sixty',
+        70: 'seventy',
+        80: 'eighty',
+        90: 'ninety',
+        100: 'hundred'
+    };
 
-    x = number
-    x = x + ""
-    res = ""
+    let numLength = number.toString().length;
+    let numArr = number.toString().split('');
 
-    if (x == 10) return 'ten'
-    if (x > 99) {
-        res += parseHundreds(x)
-        if (parseInt(x.slice(x.length - 1, x.length)) == 0 && parseInt(x.slice(x.length - 2, x.length - 1)) == 0) {
-            res = res.slice(0, res.length - 1)
-            return res
-        }
-    }
-    if (parseInt(x.slice(x.length - 2, x.length)) >= 11 && parseInt(x.slice(x.length - 2, x.length)) <= 19) {
-        res += n1[parseInt(x.slice(x.length - 2, x.length))]
-
-    }
-    else {
-        if (parseInt(x.slice(x.length - 2, x.length - 1)) == 0 && x > 99) {
-            res += parseNumerals(x)
-        }
-        else {
-            if (parseInt(x.slice(x.length - 1, x.length)) == 0 && x > 19) {
-                res += parseDecades(x)
-                res = res.slice(0, res.length - 1)
-            }
-            else res += parseDecades(x) + parseNumerals(x)
-        }
-    }
-    console.log(res)
-
-    function parseHundreds(num) {
-        n = ['one hundred ', 'two hundred ', 'three hundred ', 'four hundred ', 'five hundred ',
-            'six hundred ', 'seven hundred ', 'eight hundred ', 'nine hundred ', 'nine hundred ']
-        console.log(n[parseInt(x.slice(x.length - 3, x.length - 2)) - 1])
-        return (n[parseInt(x.slice(x.length - 3, x.length - 2))] != undefined) ?
-            n[parseInt(x.slice(x.length - 3, x.length - 2)) - 1] : '';
-
+    if (numLength === 1) {
+        return num[number];
     }
 
-    function parseDecades(num) {
-        n = ['ten ', 'twenty ', 'thirty ', 'forty ', 'fifty ', 'sixty ', 'seventy ', 'eighty ', 'ninety ']
-        return n[parseInt(x.slice(x.length - 2, x.length - 1)) - 1]
+    if (numLength === 2) {
+        if (num[number]) {
+            return num[number];
+        } else return num[numArr[0] + 0] + ' ' + num[numArr[1]];
     }
 
-    function parseNumerals(num) {
-        n = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
-        return n[parseInt(x.slice(x.length - 1, x.length))]
+    if (numLength === 3) {
+        if (num[number]) {
+            return 'one ' + num[number];
+        } else if (numArr[1] == 0 && numArr[2] == 0) {
+            return num[numArr[0]] + ' hundred';
+        } else if (numArr[1] == 0){
+            return num[numArr[0]] + ' hundred ' + num[numArr[2]];
+        } else return num[numArr[0]] + ' hundred ' + (num[numArr[1] + numArr[2]] || num[numArr[1] + 0] + ' ' + num[numArr[2]]);
     }
-
-    return res.split('undefined').join("") 
 }
